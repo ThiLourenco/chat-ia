@@ -1,6 +1,7 @@
-"use client";
+"use client"
 
 import { useState, FormEvent } from 'react';
+import axios from 'axios';
 
 interface Message {
   text: string;
@@ -9,26 +10,40 @@ interface Message {
 
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
+  const [consulta, setInput] = useState('');
 
   const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
 
-    const newMessage: Message = { text: input, fromUser: true };
+    const newMessage: Message = { text: consulta, fromUser: true };
     setMessages((prev) => [...prev, newMessage]);
-    
-    // Limpa o campo de input após o envio da mensagem
+
     setInput('');
 
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: input }),
-    });
-    const data = await response.json();
+    try {
+      // Fazendo requisição para a API
+      // const response = await fetch('http://localhost:3000/api/chat', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ consulta }),
+      // });
+      const response = await axios.post('http://localhost:5000/consulta', {
+        consulta: consulta,
+      });
+  
+      console.log("Resposta completa recebida com axios:", response);
+      console.log("Dados recebidos:", response.data);
 
-    setMessages((prev) => [...prev, { text: data.reply, fromUser: false }]);
-    setInput(data.reply);
+    if (response.data.resposta) {
+      setMessages((prev) => [...prev, { text: response.data.resposta, fromUser: false }]);
+    } else {
+      setMessages((prev) => [...prev, { text: "Erro ao processar a resposta.", fromUser: false }]);
+    }
+  
+    } catch (error) {
+      console.error("Erro ao conectar à API:", error);
+      setMessages((prev) => [...prev, { text: "Erro ao conectar à API.", fromUser: false }]);
+    }
   };
 
   return (
@@ -53,7 +68,7 @@ const ChatPage: React.FC = () => {
       <form onSubmit={sendMessage} className="flex mt-4">
         <input
           type="text"
-          value={input}
+          value={consulta}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Digite sua mensagem..."
           className="flex-grow bg-zinc-900 text-white rounded-md p-3 mr-2 border-none focus:outline-none"
