@@ -74,7 +74,7 @@ const ChatPage: React.FC = () => {
   return (
     <div className="flex flex-col w-screen h-screen p-14 bg-black text-white">
       <div className="flex items-center justify-between p-4 bg-zinc-900 rounded-md mb-4">
-        <h1 className="text-xl font-bold">Assistente Virtual - FE!N </h1>
+        <h1 className="text-xl font-bold">Assistente Virtual - Euclides </h1>
       </div>
 
       <div className="flex-grow border border-zinc-900 rounded-md p-4 custom-scrollbar h-[400px] overflow-y-auto bg-black">
