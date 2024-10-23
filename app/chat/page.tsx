@@ -13,35 +13,17 @@ const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [consulta, setInput] = useState('');
 
-  // Crie uma referência para o container de mensagens
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Função para rolar automaticamente para o final
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Chame o scroll para o final sempre que as mensagens mudarem
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  // const formatResposta = (resposta: string) => {
-  //   // Quebra a string nas quebras de linha e transforma os asteriscos em listas HTML
-  //   const formattedText = resposta
-  //     .split('\n') // Separa pelas quebras de linha
-  //     .map((line, index) => {
-  //       // Verifica se a linha começa com um asterisco (lista)
-  //       if (line.startsWith('*')) {
-  //         return <li key={index}>{line.replace('* ', '')}</li>;
-  //       }
-  //       return <p key={index}>{line}</p>;
-  //     });
-  
-  //   return <div>{formattedText}</div>;
-  // };
 
   const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
@@ -56,9 +38,6 @@ const ChatPage: React.FC = () => {
         consulta: consulta,
       });
   
-      // console.log("Resposta completa recebida com axios:", response);
-      // console.log("Dados recebidos:", response.data.resposta);
-
     if (response.data.resposta) {
       setMessages((prev) => [...prev, { text: response.data.resposta, fromUser: false }]);
     } else {
