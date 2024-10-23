@@ -28,6 +28,10 @@ const ChatPage: React.FC = () => {
   const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!consulta.trim()) {
+      return;
+    }
+
     const newMessage: Message = { text: consulta, fromUser: true };
     setMessages((prev) => [...prev, newMessage]);
 
@@ -56,7 +60,7 @@ const ChatPage: React.FC = () => {
         <h1 className="text-xl font-bold">Assistente Virtual - Miles Davis </h1>
       </div>
 
-      <div className="flex-grow border border-zinc-900 rounded-md p-4 custom-scrollbar h-[400px] overflow-y-auto bg-black">
+      <div className="flex-grow border border-zinc-900 rounded-md p-4 custom-scrollbar trasi h-[400px] overflow-y-auto bg-black">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -84,9 +88,16 @@ const ChatPage: React.FC = () => {
           placeholder="Digite sua mensagem..."
           className="flex-grow bg-zinc-900 text-white rounded-md p-3 mr-2 border-none focus:outline-none"
         />
-        <button type="submit" className="bg-black border border-zinc-700 text-white rounded-md px-4 py-2">
-          Enviar
-        </button>
+    <button 
+      type="submit" 
+      disabled={!consulta.trim()}
+      className={`bg-black border border-zinc-700 text-white rounded-md px-4 py-2 
+              hover:bg-zinc-800 hover:border-zinc-600 
+              focus:outline-none focus:ring-2 focus:ring-zinc-600 transition-all duration-300
+              ${!consulta.trim() ? 'opacity-50 cursor-not-allowed' : ''}`} 
+              >
+      Enviar
+    </button>
       </form>
     </div>
   );
