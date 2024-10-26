@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, FormEvent } from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import Link from 'next/link';
+import Footer from '../components/footer';
 
 interface Message {
   text: string;
@@ -55,9 +57,15 @@ const ChatPage: React.FC = () => {
   };
 
   return (
+    <>
     <div className="flex flex-col w-screen h-screen p-14 bg-black text-white">
       <div className="flex items-center justify-between p-4 bg-zinc-900 rounded-md mb-4">
         <h1 className="text-xl font-bold">Assistente Virtual - Miles Davis </h1>
+        
+          <Link href="/home" className='text-white px-4 py-2 rounded-md hover:bg-gray-800 hover:text-white'>
+            Voltar
+          </Link>
+        
       </div>
 
       <div className="flex-grow border border-zinc-900 rounded-md p-4 custom-scrollbar trasi h-[400px] overflow-y-auto bg-black">
@@ -100,6 +108,7 @@ const ChatPage: React.FC = () => {
     </button>
       </form>
     </div>
+    </>
   );
 };
 
