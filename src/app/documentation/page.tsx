@@ -6,7 +6,7 @@ const Documentation: React.FC = () => {
     <div className="flex flex-col w-screen h-screen p-14 bg-black text-white">
     <div className="flex items-center justify-between p-4 bg-zinc-900 rounded-md mb-4">
       <h1 className="text-xl font-bold">Miles Davis</h1>
-        <Link href="/home" className='text-white px-4 py-2 rounded-md hover:bg-gray-800 hover:text-white'>
+        <Link href="/" className='text-white px-4 py-2 rounded-md hover:bg-gray-800 hover:text-white'>
           Voltar
         </Link>
     </div>
